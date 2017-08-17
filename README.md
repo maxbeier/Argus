@@ -11,6 +11,8 @@ Monitors websites and notifys users once they change.
 git clone https://github.com/maxbeier/Argus
 cd Argus
 npm install
+cp env.example .env
+vim .env # change settings
 node index.js
 
 # with pm2
