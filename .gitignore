@@ -1,5 +1,8 @@
 # https://github.com/wearehive/project-guidelines/blob/master/.gitignore
 
+# Database
+db.json
+
 ### Node ###
 
 # Logs
