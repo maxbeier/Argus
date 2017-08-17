@@ -9,7 +9,7 @@ Monitors websites and notifys users once they change.
 
 ```
 git clone https://github.com/maxbeier/Argus
-cd argus
+cd Argus
 npm install
 node index.js
 
