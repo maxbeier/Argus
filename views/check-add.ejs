@@ -1,0 +1,67 @@
+<% include header %>
+
+<style>
+   iframe {
+      width: 100%;
+      min-height: 32rem;
+      margin: 0;
+      padding: 0;
+      border: 2px solid #e0e0e0;
+   }
+</style>
+
+<form action="<%= env.HOST %>" method="POST">
+   <div class="grid-inline">
+      <span>Check</span>
+      <label class="cell"><input name="url" type="url" placeholder="www.example.com" class="full-width" required></label>
+   </div>
+
+   <div class="grid-inline m-t-1">
+      <div>
+         <label>every
+            <input name="intervalValue" type="number" value="12" style="width: 5rem">
+         </label>
+         <label>
+            <select name="intervalUnit">
+               <option>deci-minutes</option>
+               <option selected>hours</option>
+               <option>days</option>
+            </select>
+         </label>
+         <label>and mail to
+            <input name="email" type="email" style="width: 20rem" required>
+         </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary cell">Create</button>
+   </div>
+
+   <div class="grid-inline m-t-1 add-comment hidden">
+      <span>Comment</span>
+      <label class="cell"><input name="comment" type="text" class="full-width"></label>
+   </div>
+
+   <div class="m-t-1 grid-inline">
+      <label class="add-exp-date hidden">Ending on <input name="endingAt" type="date"></label>
+      <div class="cell text-right">
+         <a href="javascript:addComment()">add comment</a>,
+         <a href="javascript:addExpDate()">add expiration date</a>,
+         <a href="javascript:addSelector()">add selector</a>
+      </div>
+   </div>
+
+
+   <div class="m-t-1 add-selector hidden">
+      <div class="grid-inline m-b-1">
+         <span>Selector</span>
+         <label class="cell"><input name="selector" type="text" class="full-width"></label>
+      </div>
+
+      <iframe id="preview" src="about:blank"></iframe>
+   </div>
+</form>
+
+<script src="<%= env.HOST %>/utils.js"></script>
+<script src="<%= env.HOST %>/add.js"></script>
+
+<% include footer %>

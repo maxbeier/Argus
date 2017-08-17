@@ -1,0 +1,75 @@
+<% include header %>
+
+<style>
+   .cap-height {
+      max-height: 25rem;
+      overflow: scroll;
+   }
+</style>
+
+<article class="m-b-2">
+
+   <h2>
+      <a href="<%= check.url %>"><%= check.url %></a>
+      <button class="btn btn-error btn-ghost pull-right" data-id="<%= check.id %>">Delete</button>
+   </h2>
+
+   <% if (isNew) { -%>
+      <p class="alert alert-success">OK, we'll have an eye on the site and send you an email once it changes.</p>
+   <% } else { -%>
+
+      <p>Last checked on: <%= check.lastChecked ? date(check.lastChecked) : 'not yet' %>, ending on: <%= check.endingAt ? date(check.endingAt) : 'never' %></p>
+
+      <% if (check.currentValue) { %>
+
+         <% if (check.changes && check.changes.length) { %>
+            <pre class="cap-height"><%- diff(check.currentValue, check.changes[0].value) %></pre>
+         <% } else { %>
+            <pre class="cap-height"><%= check.currentValue %></pre>
+         <% } %>
+
+      <% } else { %>
+         <p class="alert alert-info">URL has not been checked yet.</p>
+      <% } %>
+
+      <% if (check.changes && check.changes.length) { %>
+
+         <details class="card" open>
+            <summary class="card-header">Change History</summary>
+
+            <% check.changes.forEach(change => { %>
+               <div class="card-body">Checked on <strong><%= date(change.date) %></strong></div>
+               <samp class="card-body full-width"><%= change.value %></samp>
+            <% }); %>
+
+         </details>
+
+      <% } %>
+
+   <% } -%>
+
+</article>
+
+<script>
+   window.history.replaceState({}, '', window.location.href.replace(/\?created/,''));
+
+   const buttons = Array.from(document.querySelectorAll('[data-id]'));
+   buttons.forEach(button => button.addEventListener('click', remove));
+
+   function remove(event) {
+      const id = this.dataset.id;
+      const article = this.parentElement.parentElement;
+
+      window.fetch(`<%= env.HOST %>/${id}`, { method: 'DELETE' })
+         .then(handleErrors)
+         .then(() => article.innerHTML = `<p class="alert alert-success">Check has been deleted.</p>`)
+         .catch(e => article.innerHTML = `<p class="alert alert-error">Error: ${e.message}</p>`);
+
+      function handleErrors(response) {
+          if (!response.ok) throw new Error(response.statusText);
+          return response;
+      }
+   }
+</script>
+
+<% include footer %>

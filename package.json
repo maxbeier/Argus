@@ -1,0 +1,28 @@
+{
+  "name": "Argus",
+  "version": "1.0.0",
+  "description": "get notified when a website changes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo true"
+  },
+  "author": "Maximilian Beier",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "diff": "^3.3.0",
+    "dotenv": "^4.0.0",
+    "ejs": "^2.5.7",
+    "joi": "^10.6.0",
+    "koa": "^2.3.0",
+    "koa-body": "^2.3.0",
+    "koa-router": "^7.2.1",
+    "koa-static": "^4.0.1",
+    "koa-views": "^6.0.2",
+    "koa2-validation": "0.0.2",
+    "lowdb": "^0.16.2",
+    "nodemailer": "^4.0.1",
+    "request": "^2.81.0",
+    "uuid": "^3.1.0"
+  }
+}

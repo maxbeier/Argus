@@ -1,0 +1,49 @@
+<% include header %>
+
+<style>
+   .cap-height {
+      max-height: 25rem;
+      overflow: scroll;
+   }
+</style>
+
+<% checks.forEach(check => { %>
+
+   <article class="m-b-2">
+
+      <h2>
+         <a href="<%= env.HOST %>/<%= check.id %>"><%= check.url %></a>
+      </h2>
+      <p>Last checked on <%= date(check.lastChecked) %>, ending on: <%= check.endingAt ? date(check.endingAt) : 'never' %></p>
+
+      <% if (check.currentValue) { %>
+
+         <% if (check.changes && check.changes.length) { %>
+            <pre class="cap-height"><%- diff(check.currentValue, check.changes[0].value) %></pre>
+         <% } else { %>
+            <pre class="cap-height"><%= check.currentValue %></pre>
+         <% } %>
+
+      <% } else { %>
+         <p class="alert alert-info">URL has not been checked yet.</p>
+      <% } %>
+
+      <% if (check.changes && check.changes.length) { %>
+
+         <details class="card">
+            <summary class="card-header">Change History</summary>
+
+            <% check.changes.forEach(change => { %>
+               <div class="card-body">Checked on <strong><%= date(change.date) %></strong></div>
+               <samp class="card-body full-width"><%= change.value %></samp>
+            <% }); %>
+
+         </details>
+
+      <% } %>
+
+   </article>
+
+<% }); %>
+
+<% include footer %>
